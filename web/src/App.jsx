@@ -5,7 +5,7 @@ import { Field, ErrorText, useAction } from './ui'
 import { ChildHome, ParentHome } from './Home'
 import { Activity } from './Activity'
 import { Loans } from './Loans'
-import { Settings } from './Settings'
+import { Settings, InstallHint } from './Settings'
 import { refreshPush } from './push'
 
 export default function App() {
@@ -116,6 +116,7 @@ function Signed({ userId, email }) {
       </header>
       {data.error && <p className="error banner">{data.error}</p>}
       <main>
+        {tab === 'home' && <InstallHint compact />}
         {tab === 'home' && (isParent ? <ParentHome data={data} go={setTab} /> : <ChildHome data={data} go={setTab} />)}
         {tab === 'activity' && <Activity data={data} />}
         {tab === 'loan' && <Loans data={data} />}

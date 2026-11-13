@@ -9,4 +9,12 @@ if ('serviceWorker' in navigator) {
   })
 }
 
+// Chrome on Android fires this when the app can be installed. Keep it so a button can trigger the install.
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault()
+  window.__installPrompt = e
+  window.dispatchEvent(new Event('installable'))
+})
+window.addEventListener('appinstalled', () => { window.__installPrompt = null; window.dispatchEvent(new Event('installable')) })
+
 createRoot(document.getElementById('root')).render(<StrictMode><App /></StrictMode>)

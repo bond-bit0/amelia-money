@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { supabase, rpc } from './supabase'
 import { money, toCents, TYPE_LABEL } from './format'
 import { Modal, Field, ErrorText, useAction, Empty } from './ui'
@@ -39,13 +39,23 @@ function Notifications() {
   )
 }
 
-function InstallHint() {
+export function InstallHint({ compact }) {
+  const [prompt, setPrompt] = useState(() => window.__installPrompt || null)
+  useEffect(() => {
+    const on = () => setPrompt(window.__installPrompt || null)
+    window.addEventListener('installable', on)
+    return () => window.removeEventListener('installable', on)
+  }, [])
   const standalone = window.matchMedia?.('(display-mode: standalone)').matches
   if (standalone) return null
+  if (compact && !prompt) return null
+  const install = async () => { prompt.prompt(); await prompt.userChoice; window.__installPrompt = null; setPrompt(null) }
   return (
     <section className="card">
       <h2>Install the app</h2>
-      <p>In Chrome, tap the ⋮ menu, then <strong>Add to Home screen</strong> (or <strong>Install app</strong>). It gets its own icon and can send notifications.</p>
+      {prompt
+        ? <><p>Put Amelia Money on this phone's Home screen.</p><button className="btn primary big" onClick={install}>Install app</button></>
+        : <p>In Chrome, tap the ⋮ menu, then <strong>Add to Home screen</strong> (or <strong>Install app</strong>). It gets its own icon and can send notifications.</p>}
     </section>
   )
 }
