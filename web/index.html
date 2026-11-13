@@ -2,6 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // The root domain shows the welcome page. Only money.* (and the Netlify address) runs the app.
+      if (/^(www\.)?ameliabond\.online$/.test(location.hostname)) {
+        if (navigator.serviceWorker) navigator.serviceWorker.getRegistrations().then(function (rs) { rs.forEach(function (r) { r.unregister() }) })
+        location.replace('/home/')
+      }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0f766e" />
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
