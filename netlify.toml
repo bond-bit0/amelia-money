@@ -7,3 +7,17 @@
   for = "/sw.js"
   [headers.values]
     Cache-Control = "no-cache"
+
+# ameliabond.online and www.ameliabond.online show the welcome page.
+# money.ameliabond.online shows the app.
+[[redirects]]
+  from = "https://www.ameliabond.online/*"
+  to = "/home/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://ameliabond.online/*"
+  to = "/home/index.html"
+  status = 200
+  force = true
