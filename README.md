@@ -36,7 +36,8 @@ Static hosting (Netlify):
 - Base directory: `web`
 - Build command: `npm run build`
 - Publish directory: `web/dist`
-- Domain: `money.ameliabond.online`
+- Domain: `money.ameliabond.online` (app). `ameliabond.online` and `www` show the welcome page in `web/public/home/`.
+- The repo must stay public: Netlify's free plan refuses to build pushes to a private repo from anyone but the account owner.
 
 Supabase setup that lives outside the repo: Edge Function secrets (`VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT`, `PUSH_SECRET`) and the `private.config` rows `push_url` and `push_secret`. Auth uses email + password with email confirmation off, so no email is ever sent.
 
