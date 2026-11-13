@@ -198,3 +198,7 @@ table.sched th { color: var(--muted); font-weight: 600; }
 .x-btn { border: 1px solid var(--line); background: var(--card); color: var(--muted); border-radius: 50%; width: 36px; height: 36px; flex-shrink: 0; cursor: pointer; font-size: 15px; line-height: 1; }
 .x-btn:hover { color: var(--neg); border-color: var(--neg); }
 .btn.small-btn { min-height: 36px; padding: 6px 12px; font-size: 14px; }
+
+.pp-video { padding: 8px 0 44px; text-align: center; }
+.pp-video h2 { font-size: 28px; margin: 0 0 16px; }
+.pp-video video { display: block; width: 100%; max-width: 880px; margin: 0 auto; aspect-ratio: 16 / 9; border-radius: 20px; background: #073b36; box-shadow: 0 18px 40px rgba(0,0,0,.18); }

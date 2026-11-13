@@ -40,6 +40,13 @@ export function Product() {
         <Phone src="/shots/kid-home.png" alt="A kid's home screen with Credit, Available and a list of jobs to claim" />
       </header>
 
+      <section className="pp-video">
+        <h2>See it in 47 seconds</h2>
+        <video controls playsInline preload="none" poster="/promo/poster.jpg">
+          <source src="/promo/amelia-money-promo.mp4" type="video/mp4" />
+        </video>
+      </section>
+
       <Feature tag="Earning" title="Jobs pay the moment they are done"
         text="Parents set the jobs and the prices. Kids tap Claim and the money lands right away. No waiting on a parent to remember."
         points={['Limits stop double claims, like once every 2 days or 2 a day.', 'One-time tasks count down and expire if nobody claims them.', 'Both parents get a phone alert on every claim and can undo it with a note.']}
