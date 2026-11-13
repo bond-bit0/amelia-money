@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { rpc } from './supabase'
+import { supabase, rpc } from './supabase'
 import { money, toCents, until, dateTime, TYPE_LABEL } from './format'
 import { Modal, Field, ErrorText, useAction, useNow, Empty } from './ui'
 
@@ -158,6 +158,43 @@ function LoanMini({ data, loan, go }) {
 
 // ---------------------------------------------------------------- parent
 
+// An open one-time task. A parent can give it more time or take it off the child's list.
+function TaskRow({ c, now, reload }) {
+  const [mode, setMode] = useState(null) // null | 'time' | 'remove'
+  const { busy, error, run } = useAction()
+  const save = (patch) => run(async () => {
+    const { error } = await supabase.from('chore').update(patch).eq('id', c.id)
+    if (error) throw new Error(error.message)
+    setMode(null); reload()
+  })
+  const extend = (mins) => save({ expires_at: new Date(Math.max(new Date(c.expires_at).getTime(), Date.now()) + mins * 60000).toISOString() })
+  return (
+    <li className="task-row">
+      <div className="task-top">
+        <span className="task-name">{c.name} · {money(c.amount_cents)}</span>
+        <small className="countdown">ends in {until(c.expires_at, now)}</small>
+      </div>
+      <div className="task-actions">
+        {mode === null && <>
+          <button className="btn small-btn" onClick={() => setMode('time')}>+ Add time</button>
+          <button className="x-btn" aria-label={`Remove task ${c.name}`} onClick={() => setMode('remove')}>✕</button>
+        </>}
+        {mode === 'time' && <>
+          <button className="btn small-btn" disabled={busy} onClick={() => extend(30)}>+30 min</button>
+          <button className="btn small-btn" disabled={busy} onClick={() => extend(60)}>+1 hour</button>
+          <button className="btn small-btn" disabled={busy} onClick={() => extend(180)}>+3 hours</button>
+          <button className="btn link small-btn" onClick={() => setMode(null)}>Cancel</button>
+        </>}
+        {mode === 'remove' && <>
+          <button className="btn danger small-btn" disabled={busy} onClick={() => save({ active: false })}>Remove task</button>
+          <button className="btn small-btn" onClick={() => setMode(null)}>Keep</button>
+        </>}
+      </div>
+      <ErrorText error={error} />
+    </li>
+  )
+}
+
 export function ParentHome({ data, go }) {
   const kids = children(data)
   const [modal, setModal] = useState(null)
@@ -201,7 +238,7 @@ export function ParentHome({ data, go }) {
         <section className="card">
           <h2>Open tasks</h2>
           <ul className="list">{tasks.map((c) => (
-            <li key={c.id} className="row-between"><span>{c.name} · {money(c.amount_cents)}</span><small className="countdown">ends in {until(c.expires_at, now)}</small></li>
+            <TaskRow key={c.id} c={c} now={now} reload={data.reload} />
           ))}</ul>
         </section>
       )}
