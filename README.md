@@ -87,3 +87,7 @@ These are enforced in the database, not just in the app's buttons.
 - A loan payment can't be bigger than the kid's credit. If they can't pay, the payment is missed.
 - A payment not fully paid by the end of its due date is a strike. Strikes are permanent.
 - Each family only sees its own data.
+
+## License
+
+MIT. Free to use and change. See `LICENSE`.
