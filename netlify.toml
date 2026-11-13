@@ -21,3 +21,9 @@
   to = "/home/index.html"
   status = 200
   force = true
+
+# The sign-in page is part of the app.
+[[redirects]]
+  from = "/login"
+  to = "/index.html"
+  status = 200

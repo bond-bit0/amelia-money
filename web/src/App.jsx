@@ -7,6 +7,7 @@ import { Activity } from './Activity'
 import { Loans } from './Loans'
 import { Settings, InstallHint } from './Settings'
 import { refreshPush } from './push'
+import { Product } from './Product'
 
 export default function App() {
   const [session, setSession] = useState(undefined)
@@ -16,7 +17,7 @@ export default function App() {
     return () => data.subscription.unsubscribe()
   }, [])
   if (session === undefined) return <Splash />
-  if (!session) return <SignIn />
+  if (!session) return location.pathname.startsWith('/login') ? <SignIn /> : <Product />
   return <Signed userId={session.user.id} email={session.user.email} />
 }
 
@@ -52,6 +53,7 @@ function SignIn() {
           {mode === 'in' ? 'New here? Create an account' : 'Have an account? Sign in'}
         </button>
       </form>
+      <a className="back" href="/">What is Amelia Money?</a>
     </div>
   )
 }

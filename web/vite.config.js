@@ -15,7 +15,7 @@ export default defineConfig({
         name: 'Amelia Money',
         short_name: 'Money',
         description: "Amelia's chores, money and loans",
-        start_url: '/',
+        start_url: '/login',
         display: 'standalone',
         background_color: '#f6f7f4',
         theme_color: '#0f766e',
