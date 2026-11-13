@@ -114,6 +114,13 @@ function Signed({ userId, email }) {
         <span className="brand">Amelia Money</span>
         <span className="who">{data.me.display_name}</span>
       </header>
+      <nav className="tabs">
+        {TABS.map((t) => (
+          <button key={t.id} className={tab === t.id ? 'on' : ''} onClick={() => setTab(t.id)}>
+            <svg className="tab-icon" viewBox="0 0 24 24" aria-hidden="true">{ICON[t.id]}</svg>{t.label}
+          </button>
+        ))}
+      </nav>
       {data.error && <p className="error banner">{data.error}</p>}
       <main>
         {tab === 'home' && <InstallHint compact />}
@@ -122,13 +129,6 @@ function Signed({ userId, email }) {
         {tab === 'loan' && <Loans data={data} />}
         {tab === 'settings' && <Settings data={data} email={email} />}
       </main>
-      <nav className="tabs">
-        {TABS.map((t) => (
-          <button key={t.id} className={tab === t.id ? 'on' : ''} onClick={() => setTab(t.id)}>
-            <svg className="tab-icon" viewBox="0 0 24 24" aria-hidden="true">{ICON[t.id]}</svg>{t.label}
-          </button>
-        ))}
-      </nav>
     </div>
   )
 }

@@ -143,13 +143,13 @@ table.sched th { color: var(--muted); font-weight: 600; }
 .invite-code strong { display: block; font-size: 34px; letter-spacing: 6px; color: var(--brand); }
 
 .modal-back { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: flex-end; justify-content: center; z-index: 20; }
-.modal { background: var(--card); width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto; border-radius: 20px 20px 0 0; padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); animation: up .2s ease-out; }
+.modal { background: var(--card); width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto; border-radius: 20px 20px 0 0; padding: 16px; padding-bottom: calc(84px + env(safe-area-inset-bottom)); animation: up .2s ease-out; }
 @keyframes up { from { transform: translateY(40px); opacity: .5 } to { transform: none; opacity: 1 } }
-@media (min-width: 700px) { .modal-back { align-items: center; } .modal { border-radius: 20px; } }
+@media (min-width: 700px) { .modal-back { align-items: center; } .modal { border-radius: 20px; padding-bottom: 16px; } }
 .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .modal-head h2 { margin: 0; }
 
-.tabs { position: fixed; bottom: 0; left: 0; right: 0; display: flex; background: var(--card); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); z-index: 10; }
+.tabs { position: sticky; top: 0; display: flex; background: var(--card); border-bottom: 1px solid var(--line); border-top: 1px solid var(--line); margin-bottom: 14px; z-index: 10; }
 .tabs button { flex: 1; background: none; border: none; padding: 8px 0 10px; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; }
 .tabs button.on { color: var(--brand); }
 .tab-icon { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
