@@ -88,6 +88,17 @@ These are enforced in the database, not just in the app's buttons.
 - A payment not fully paid by the end of its due date is a strike. Strikes are permanent.
 - Each family only sees its own data.
 
+## Sign-up alerts (optional)
+
+To get a phone alert when someone new signs up on your copy, run this in the Supabase SQL editor after you create your family. Use your own display name.
+
+```sql
+insert into private.config(key, value)
+select 'owner_user_id', user_id::text from public.member where display_name = 'Dad' and role = 'parent';
+```
+
+Your Settings tab then shows who is using the app.
+
 ## License
 
 MIT. Free to use and change. See `LICENSE`.

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase, rpc } from './supabase'
-import { money, toCents, TYPE_LABEL } from './format'
+import { money, toCents, dateTime, TYPE_LABEL } from './format'
 import { Modal, Field, ErrorText, useAction, Empty } from './ui'
 import { limitText } from './Home'
 import { enablePush, pushPermission, pushSupported } from './push'
@@ -13,12 +13,35 @@ export function Settings({ data, email }) {
       <InstallHint />
       {isParent && <Chores data={data} />}
       <Members data={data} />
+      {isParent && <OwnerStats />}
       <section className="card">
         <h2>Account</h2>
         <p className="muted">Signed in as {email}</p>
         <button className="btn" onClick={() => supabase.auth.signOut()}>Sign out</button>
       </section>
     </>
+  )
+}
+
+// Only the person who runs this copy of the app gets numbers back. Everyone else sees nothing.
+function OwnerStats() {
+  const [st, setSt] = useState(null)
+  useEffect(() => { rpc('owner_stats').then(setSt).catch(() => {}) }, [])
+  if (!st) return null
+  return (
+    <section className="card">
+      <h2>Who is using the app</h2>
+      <p className="muted">Only you see this. You get an alert for each new sign-up and new family.</p>
+      <p><strong>{st.accounts}</strong> accounts in total · <strong>{st.other_families}</strong> other {st.other_families === 1 ? 'family' : 'families'} · <strong>{st.entries_7d}</strong> of their entries in the last 7 days</p>
+      {st.families.length === 0 && <Empty>No other families yet.</Empty>}
+      <ul className="list">
+        {st.families.map((f) => (
+          <li key={f.created_at}>
+            <div><strong>{f.name}</strong><small>{f.members} people · {f.entries} entries · joined {dateTime(f.created_at)}{f.last_entry ? ` · last used ${dateTime(f.last_entry)}` : ''}</small></div>
+          </li>
+        ))}
+      </ul>
+    </section>
   )
 }
 
